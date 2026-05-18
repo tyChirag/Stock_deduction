@@ -105,13 +105,56 @@ const initialMockData = {
     { name: 'Flipkart', stock: 25000 },
     { name: 'Meesho', stock: 16420 },
   ],
+  monthlyAnalytics: [
+    { month: 'Jan', revenue: 750000, orders: 15200, profit: 150000, inventorySold: 18500, amazon: 350000, flipkart: 250000, meesho: 100000, offline: 50000 },
+    { month: 'Feb', revenue: 780000, orders: 16100, profit: 165000, inventorySold: 19200, amazon: 370000, flipkart: 260000, meesho: 100000, offline: 50000 },
+    { month: 'Mar', revenue: 820000, orders: 17500, profit: 180000, inventorySold: 21000, amazon: 400000, flipkart: 280000, meesho: 90000, offline: 50000 },
+    { month: 'Apr', revenue: 790000, orders: 16800, profit: 170000, inventorySold: 20000, amazon: 380000, flipkart: 270000, meesho: 90000, offline: 50000 },
+    { month: 'May', revenue: 850000, orders: 18200, profit: 195000, inventorySold: 22500, amazon: 420000, flipkart: 290000, meesho: 90000, offline: 50000 },
+    { month: 'Jun', revenue: 880000, orders: 19000, profit: 210000, inventorySold: 23800, amazon: 450000, flipkart: 300000, meesho: 80000, offline: 50000 },
+    { month: 'Jul', revenue: 920000, orders: 20500, profit: 225000, inventorySold: 25000, amazon: 480000, flipkart: 310000, meesho: 80000, offline: 50000 },
+    { month: 'Aug', revenue: 950000, orders: 21200, profit: 240000, inventorySold: 26500, amazon: 500000, flipkart: 320000, meesho: 80000, offline: 50000 },
+    { month: 'Sep', revenue: 1050000, orders: 23500, profit: 280000, inventorySold: 29000, amazon: 550000, flipkart: 350000, meesho: 100000, offline: 50000 },
+    { month: 'Oct', revenue: 1250000, orders: 28000, profit: 350000, inventorySold: 35000, amazon: 650000, flipkart: 450000, meesho: 100000, offline: 50000 },
+    { month: 'Nov', revenue: 1120000, orders: 25000, profit: 310000, inventorySold: 31000, amazon: 600000, flipkart: 380000, meesho: 90000, offline: 50000 },
+    { month: 'Dec', revenue: 1180000, orders: 26500, profit: 325000, inventorySold: 33000, amazon: 620000, flipkart: 410000, meesho: 100000, offline: 50000 },
+  ],
 };
 
 const useStore = create(
   persist(
     (set, get) => ({
       isAuthenticated: false,
+      user: {
+        name: 'Chirag Tyagi',
+        email: 'chirag@gmail.com',
+        accountType: 'Pro Seller',
+        mobile: '+91 9876543210',
+        businessName: 'Tyagi Enterprises',
+        address: '123 Tech Park, Bangalore',
+      },
       theme: 'light',
+      settings: {
+        notifications: {
+          lowStock: true,
+          newOrder: true,
+          syncAlerts: false,
+          weeklyReports: true,
+          email: true,
+          sms: false,
+        },
+        inventory: {
+          autoSync: true,
+          autoDetectDuplicates: true,
+          ocrMode: 'standard',
+          lowStockThreshold: 10,
+          smartAlerts: true,
+        },
+        appearance: {
+          density: 'comfortable',
+          accentColor: 'blue',
+        }
+      },
       isLoading: false,
       data: initialMockData,
       notifications: [],
@@ -225,8 +268,9 @@ const useStore = create(
         const defaultOffline = { name: 'Offline Store', connected: true, token: null, products: 0, lowStock: 0, orders: 0, color: 'bg-green-500', productList: [], orderList: [] };
         const offline = state.data.platforms.offline || defaultOffline;
 
+        const normalizeName = (name) => name.toLowerCase().trim().replace(/\s+/g, ' ');
         const existing = offline.productList.find(
-          (p) => p.name.toLowerCase() === product.name.toLowerCase()
+          (p) => normalizeName(p.name) === normalizeName(product.name)
         );
 
         let updatedList;
@@ -235,16 +279,26 @@ const useStore = create(
         if (existing) {
           updatedList = offline.productList.map((p) =>
             p.id === existing.id
-              ? { ...p, stock: p.stock + product.stock }
+              ? { 
+                  ...p, 
+                  stock: p.stock + Number(product.stock || 0),
+                  price: product.price ? Number(product.price) : p.price,
+                  category: product.category || p.category,
+                  sku: product.sku || p.sku,
+                  image: product.image && product.image !== "https://via.placeholder.com/300" ? product.image : p.image
+                }
               : p
           );
         } else {
           updatedList = [
             ...offline.productList,
             {
-              id: Date.now(),
+              id: product.id || Date.now() + Math.floor(Math.random() * 1000),
               name: product.name,
-              stock: product.stock,
+              stock: Number(product.stock || 0),
+              price: Number(product.price || 0),
+              category: product.category || 'Uncategorized',
+              sku: product.sku || `SKU-${Math.floor(Math.random() * 10000)}`,
               sold: 0,
               image: product.image || "https://via.placeholder.com/300"
             }
@@ -441,12 +495,26 @@ const useStore = create(
           };
         });
       },
+
+      updateUser: (updates) => set((state) => ({ user: { ...state.user, ...updates } })),
+      updateSettings: (category, updates) => set((state) => ({
+        settings: {
+          ...state.settings,
+          [category]: {
+            ...state.settings[category],
+            ...updates
+          }
+        }
+      })),
+      logout: () => set({ isAuthenticated: false }),
     }),
     {
       name: 'seller-sync-storage',
-      version: 5,
+      version: 9, // bump version to bust cache for settings object
       partialize: (state) => ({ 
         isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        settings: state.settings,
         data: state.data, 
         theme: state.theme,
         notifications: state.notifications,

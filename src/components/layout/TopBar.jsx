@@ -5,17 +5,25 @@ import useStore from '../../store/useStore';
 import Button from '../ui/Button';
 import NotificationDropdown from './NotificationDropdown';
 import GlobalSearch from './GlobalSearch';
+import ProfileDropdown from './ProfileDropdown';
+import UserProfileModal from '../profile/UserProfileModal';
 
 export default function TopBar() {
   const { theme, toggleTheme, refreshData, isLoading, notifications, initializeNotifications } = useStore();
   const navigate = useNavigate();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [profileModalState, setProfileModalState] = useState({ isOpen: false, tab: 'account' });
 
   useEffect(() => {
     initializeNotifications();
   }, [initializeNotifications]);
 
   const unreadCount = notifications ? notifications.filter(n => !n.read).length : 0;
+
+  const handleOpenProfileModal = (tab = 'account') => {
+    setProfileModalState({ isOpen: true, tab });
+  };
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-gray-200 bg-white/80 px-4 backdrop-blur-md dark:border-gray-800 dark:bg-[#111217]/80 sm:px-6 lg:px-8">
@@ -69,14 +77,30 @@ export default function TopBar() {
           <NotificationDropdown isOpen={isNotificationOpen} onClose={() => setIsNotificationOpen(false)} />
         </div>
         
-        <div className="h-8 w-8 overflow-hidden rounded-full border border-border">
-          <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-            alt="User avatar"
-            className="h-full w-full object-cover bg-secondary"
+        <div className="relative">
+          <button 
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+            className="h-8 w-8 overflow-hidden rounded-full border border-border hover:ring-2 hover:ring-blue-500 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              alt="User avatar"
+              className="h-full w-full object-cover bg-secondary"
+            />
+          </button>
+          <ProfileDropdown 
+            isOpen={isProfileOpen} 
+            onClose={() => setIsProfileOpen(false)} 
+            onOpenProfile={handleOpenProfileModal}
           />
         </div>
       </div>
+
+      <UserProfileModal 
+        isOpen={profileModalState.isOpen}
+        initialTab={profileModalState.tab}
+        onClose={() => setProfileModalState({ isOpen: false, tab: 'account' })}
+      />
     </header>
   );
 }
