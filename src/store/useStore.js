@@ -18,8 +18,8 @@ const initialMockData = {
       orders: 1420,
       color: 'bg-orange-500',
       productList: [
-        { id: 1, name: 'Wireless Noise-Cancelling Headphones', sold: 1240, stock: 45, image: 'https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?w=500' },
-        { id: 2, name: 'Smart Fitness Watch', sold: 980, stock: 12, image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=500' },
+        { id: 1, name: 'Wireless Noise-Cancelling Headphones', sold: 1240, stock: 45, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500' },
+        { id: 2, name: 'Smart Fitness Watch', sold: 980, stock: 12, image: 'https://images.unsplash.com/photo-1544117519-31a4b719223d?w=500' },
         { id: 3, name: 'Ergonomic Office Chair', sold: 850, stock: 8, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500' },
         { id: 4, name: 'Mechanical Gaming Keyboard', sold: 620, stock: 5, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500' },
         { id: 5, name: '4K Monitor', sold: 410, stock: 22, image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500' },
@@ -70,7 +70,7 @@ const initialMockData = {
         { id: 203, name: 'Home Decor Wall Art', sold: 980, stock: 6, image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=500' },
         { id: 204, name: 'Kitchen Utensils Set', sold: 850, stock: 40, image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500' },
         { id: 205, name: 'Kids Educational Toys', sold: 620, stock: 8, image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=500' },
-        { id: 206, name: 'Cotton Bed Sheets', sold: 450, stock: 3, image: 'https://images.unsplash.com/photo-1582582494700-2c4e3bdf0a4b?w=500' },
+        { id: 206, name: 'Cotton Bed Sheets', sold: 450, stock: 3, image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500' },
       ],
       orderList: [
         { id: 'MSH-3001', productName: 'Designer Kurtis Collection', status: 'Completed', date: '2023-10-24' },
@@ -444,7 +444,7 @@ const useStore = create(
     }),
     {
       name: 'seller-sync-storage',
-      version: 2,
+      version: 5,
       partialize: (state) => ({ 
         isAuthenticated: state.isAuthenticated,
         data: state.data, 
