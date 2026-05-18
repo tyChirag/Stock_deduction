@@ -9,7 +9,7 @@ import ProfileDropdown from './ProfileDropdown';
 import UserProfileModal from '../profile/UserProfileModal';
 
 export default function TopBar() {
-  const { theme, toggleTheme, refreshData, isLoading, notifications, initializeNotifications } = useStore();
+  const { theme, toggleTheme, refreshData, isLoading, notifications, initializeNotifications, toggleMobileMenu } = useStore();
   const navigate = useNavigate();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -28,10 +28,13 @@ export default function TopBar() {
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-gray-200 bg-white/80 px-4 backdrop-blur-md dark:border-gray-800 dark:bg-[#111217]/80 sm:px-6 lg:px-8">
       <div className="flex items-center">
-        <button className="mr-4 text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 sm:hidden">
+        <button 
+          onClick={toggleMobileMenu}
+          className="mr-2 sm:mr-4 text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 sm:hidden shrink-0"
+        >
           <Menu className="h-6 w-6" />
         </button>
-        <GlobalSearch />
+        <div className="w-48 sm:w-auto"><GlobalSearch /></div>
       </div>
       
       <div className="flex items-center space-x-4">

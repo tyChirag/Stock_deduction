@@ -133,6 +133,7 @@ const useStore = create(
         businessName: 'Tyagi Enterprises',
         address: '123 Tech Park, Bangalore',
       },
+      isMobileMenuOpen: false,
       theme: 'light',
       settings: {
         notifications: {

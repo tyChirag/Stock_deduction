@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import useStore from './store/useStore';
 import Sidebar from './components/layout/Sidebar';
 import TopBar from './components/layout/TopBar';
+import BottomNav from './components/layout/BottomNav';
 import DashboardPage from './pages/DashboardPage';
 import PlatformPage from './pages/PlatformPage';
 import LoginPage from './pages/LoginPage';
@@ -25,11 +26,12 @@ function MainLayout() {
       <Sidebar />
       <div className="sm:pl-64 flex flex-col flex-1 min-h-screen w-full">
         <TopBar />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto w-full relative">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 sm:pb-6 overflow-y-auto w-full relative">
           <ErrorBoundary>
             <Outlet />
           </ErrorBoundary>
         </main>
+        <BottomNav />
       </div>
     </div>
   );
