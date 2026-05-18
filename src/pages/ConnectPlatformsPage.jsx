@@ -36,7 +36,7 @@ export default function ConnectPlatformsPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 text-white shadow-sm">
               <span className="text-xl font-bold">S</span>
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">SellerSync Setup</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">StockSync Setup</h1>
           </div>
           
           <button 

@@ -53,7 +53,7 @@ export default function LoginPage() {
             <span className="text-3xl font-bold">S</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-foreground">
-            SellerSync
+            StockSync
           </h2>
           <p className="mt-2 text-center text-sm text-gray-500 dark:text-muted-foreground">
             Sign in to manage your e-commerce channels
