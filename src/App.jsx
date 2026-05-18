@@ -26,7 +26,7 @@ function MainLayout() {
       <Sidebar />
       <div className="sm:pl-64 flex flex-col flex-1 min-h-screen w-full">
         <TopBar />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 sm:pb-6 overflow-y-auto w-full relative">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 pb-24 sm:pb-6 overflow-y-auto w-full relative bg-gray-50/30 dark:bg-transparent">
           <ErrorBoundary>
             <Outlet />
           </ErrorBoundary>

@@ -115,7 +115,7 @@ export default function OrdersPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800/50 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
               <tr>
@@ -167,6 +167,42 @@ export default function OrdersPage() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Cards View */}
+        <div className="sm:hidden flex flex-col gap-3">
+          {currentOrders.length > 0 ? (
+            currentOrders.map((order) => (
+              <div 
+                key={`mobile-${order.id}`}
+                className={`p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-[#1A1D24] ${order.id === highlightOrderId ? 'ring-2 ring-primary bg-primary/5' : ''}`}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-gray-900 dark:text-white">{order.id}</span>
+                    <span className="text-[10px] text-gray-500 dark:text-gray-400 bg-white dark:bg-[#111217] px-2 py-0.5 rounded border border-gray-200 dark:border-gray-700 capitalize">
+                      {order.platform}
+                    </span>
+                  </div>
+                  <StatusBadge 
+                    status={order.status === 'Completed' ? 'connected' : 'warning'} 
+                    label={order.status} 
+                  />
+                </div>
+                <div className="flex items-center mb-2">
+                  <PackageOpen className="h-4 w-4 mr-2 text-gray-400 shrink-0" />
+                  <span className="text-sm text-gray-700 dark:text-gray-300 truncate">{order.productName}</span>
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  {new Date(order.date).toLocaleDateString()}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+              No orders found.
+            </div>
+          )}
         </div>
 
         {/* Pagination */}

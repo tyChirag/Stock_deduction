@@ -66,7 +66,7 @@ export default function AnalyticsPage() {
   }
 
   const StatCard = ({ title, value, growth, icon: Icon, prefix = "" }) => (
-    <Card className="p-6 relative overflow-hidden group">
+    <Card className="p-4 sm:p-6 relative overflow-hidden group">
       {isLoading && (
         <div className="absolute inset-0 z-10 animate-pulse bg-gray-50/80 backdrop-blur-[2px] dark:bg-[#09090b]/80" />
       )}
@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue & Profit Growth Area Chart */}
-        <Card className="p-6 relative">
+        <Card className="p-4 sm:p-6 relative">
           {isLoading && (
             <div className="absolute inset-0 z-10 animate-pulse bg-gray-50/80 backdrop-blur-[2px] dark:bg-[#09090b]/80 rounded-xl" />
           )}
@@ -152,7 +152,7 @@ export default function AnalyticsPage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Revenue & Profit Trend</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">Monthly financial performance</p>
           </div>
-          <div className="h-80 w-full">
+          <div className="h-56 sm:h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={filteredData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
@@ -181,7 +181,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Platform Comparison Line Chart */}
-        <Card className="p-6 relative">
+        <Card className="p-4 sm:p-6 relative">
           {isLoading && (
             <div className="absolute inset-0 z-10 animate-pulse bg-gray-50/80 backdrop-blur-[2px] dark:bg-[#09090b]/80 rounded-xl" />
           )}
@@ -189,7 +189,7 @@ export default function AnalyticsPage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Platform Performance</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">Monthly revenue breakdown by platform</p>
           </div>
-          <div className="h-80 w-full">
+          <div className="h-56 sm:h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={filteredData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#374151" strokeOpacity={0.1} />
@@ -221,7 +221,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Order Volume Bar Chart */}
-        <Card className="p-6 lg:col-span-2 relative">
+        <Card className="p-4 sm:p-6 lg:col-span-2 relative">
           {isLoading && (
             <div className="absolute inset-0 z-10 animate-pulse bg-gray-50/80 backdrop-blur-[2px] dark:bg-[#09090b]/80 rounded-xl" />
           )}
@@ -229,7 +229,7 @@ export default function AnalyticsPage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Order Volume & Inventory</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">Monthly orders vs items sold</p>
           </div>
-          <div className="h-80 w-full">
+          <div className="h-56 sm:h-80 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={filteredData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#374151" strokeOpacity={0.1} />

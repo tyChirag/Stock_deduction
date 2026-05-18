@@ -23,8 +23,8 @@ export default function UserProfileModal({ isOpen, onClose, initialTab = 'accoun
   ];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/60 backdrop-blur-sm p-4 sm:p-6 md:p-12 overflow-hidden">
-      <div className="bg-white dark:bg-[#111217] w-full max-w-5xl h-full max-h-[800px] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-gray-200 dark:border-gray-800">
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-gray-900/60 backdrop-blur-sm sm:p-6 md:p-12 overflow-hidden">
+      <div className="bg-white dark:bg-[#111217] w-full max-w-5xl h-[90vh] sm:h-full sm:max-h-[800px] rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-full sm:slide-in-from-bottom-0 sm:fade-in sm:zoom-in-95 duration-300 border border-gray-200 dark:border-gray-800">
         
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">

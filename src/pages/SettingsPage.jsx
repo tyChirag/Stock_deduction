@@ -64,7 +64,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Content Area with Framer Motion Transitions */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 -mx-3 sm:mx-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

@@ -119,7 +119,7 @@ export default function InventoryPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-800/50 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
               <tr>
@@ -174,6 +174,51 @@ export default function InventoryPage() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Cards View */}
+        <div className="sm:hidden flex flex-col gap-3">
+          {currentProducts.length > 0 ? (
+            currentProducts.map((product) => (
+              <div 
+                key={`mobile-${product.platformKey}-${product.id}`}
+                ref={product.id.toString() === highlightProductId ? highlightRef : null}
+                className={`p-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-[#1A1D24] flex gap-3 ${product.id.toString() === highlightProductId ? 'ring-2 ring-primary bg-primary/5' : ''}`}
+              >
+                <div className="h-16 w-16 flex-shrink-0 rounded-lg bg-gray-200 dark:bg-gray-800 overflow-hidden">
+                  {product.image ? (
+                    <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
+                  ) : (
+                    <ImageIcon className="h-6 w-6 m-auto mt-5 text-gray-400" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                  <h4 className="font-semibold text-gray-900 dark:text-white truncate text-sm mb-1">{product.name}</h4>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 bg-white dark:bg-[#111217] px-2 py-0.5 rounded-md border border-gray-200 dark:border-gray-700 capitalize shadow-sm">
+                      {product.platform}
+                    </span>
+                    <span className="text-xs text-gray-500">Sold: {product.sold}</span>
+                  </div>
+                  <div className="flex items-center">
+                    {product.stock < 20 ? (
+                      <span className="text-xs font-semibold flex items-center text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded-md">
+                        <AlertCircle className="h-3 w-3 mr-1" /> Low Stock: {product.stock}
+                      </span>
+                    ) : (
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                        Stock: {product.stock}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+              No products found.
+            </div>
+          )}
         </div>
 
         {/* Pagination */}

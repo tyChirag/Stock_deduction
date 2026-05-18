@@ -51,7 +51,7 @@ export default function MetricsOverview() {
       {metrics.map((metric, idx) => (
         <Card
           key={idx}
-          className="relative overflow-hidden p-6 group"
+          className="relative overflow-hidden p-4 sm:p-6 group"
         >
           {isLoading && (
             <div className="absolute inset-0 z-10 animate-pulse bg-gray-100/50 backdrop-blur-[2px] dark:bg-gray-800/50" />

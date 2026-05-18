@@ -10,7 +10,7 @@ export default function PlatformCard({ platform, platformKey }) {
 
   return (
     <Card 
-      className="p-6 transition-colors"
+      className="p-4 sm:p-6 transition-colors"
       onClick={() => navigate(`/platform/${platformKey}`)}
     >
       <div className="flex items-center justify-between mb-6">

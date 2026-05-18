@@ -77,7 +77,7 @@ export default function Charts() {
   return (
     <div className={`mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
       {/* Sales Trend Chart */}
-      <Card className="relative p-6">
+      <Card className="relative p-4 sm:p-6">
         {isLoading && (
           <div className="absolute inset-0 z-10 animate-pulse bg-gray-50/80 backdrop-blur-[2px] dark:bg-[#09090b]/80 rounded-xl" />
         )}
@@ -85,7 +85,7 @@ export default function Charts() {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Sales Trend</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">Revenue across connected platforms (7 days)</p>
         </div>
-        <div className="h-72 w-full">
+        <div className="h-56 sm:h-72 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={filteredSales} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
@@ -108,7 +108,7 @@ export default function Charts() {
       </Card>
 
       {/* Inventory Distribution Chart */}
-      <Card className="relative p-6">
+      <Card className="relative p-4 sm:p-6">
         {isLoading && (
           <div className="absolute inset-0 z-10 animate-pulse bg-gray-50/80 backdrop-blur-[2px] dark:bg-[#09090b]/80 rounded-xl" />
         )}
@@ -116,7 +116,7 @@ export default function Charts() {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Inventory Distribution</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">Stock per connected platform</p>
         </div>
-        <div className="h-72 w-full">
+        <div className="h-56 sm:h-72 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={filteredInventory} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#374151" strokeOpacity={0.2} />
