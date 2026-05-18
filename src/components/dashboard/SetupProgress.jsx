@@ -6,7 +6,7 @@ import useStore from '../../store/useStore';
 import Card from '../ui/Card';
 
 export default function SetupProgress() {
-  const { onboardingTasks } = useStore();
+  const { onboardingTasks, setupDismissed, dismissSetup } = useStore();
   
   const tasks = [
     { id: 'connectedPlatform', label: 'Connect your first platform', path: '/connect-platforms' },
@@ -19,11 +19,22 @@ export default function SetupProgress() {
   const totalCount = tasks.length;
   const progressPercentage = (completedCount / totalCount) * 100;
 
-  if (completedCount === totalCount) return null;
+  if (completedCount === totalCount || setupDismissed) return null;
 
   return (
-    <Card className="mb-8 overflow-hidden bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 border-blue-100 dark:border-blue-900/30">
+    <Card className="mb-8 overflow-hidden bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 border-blue-100 dark:border-blue-900/30 relative">
       <div className="p-6">
+        <button 
+          onClick={dismissSetup}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          title="Dismiss Setup Guide"
+        >
+          <span className="sr-only">Dismiss</span>
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">

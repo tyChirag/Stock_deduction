@@ -113,6 +113,17 @@ export default function WelcomeScreen() {
               )}
             </AnimatePresence>
           </div>
+
+          {/* Skip Button */}
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            onClick={() => completeWelcome()}
+            className="absolute bottom-10 right-10 text-sm font-medium text-gray-400 hover:text-white transition-colors px-4 py-2 rounded-full hover:bg-white/10"
+          >
+            Skip Intro
+          </motion.button>
         </motion.div>
       )}
     </AnimatePresence>

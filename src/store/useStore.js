@@ -143,6 +143,7 @@ const useStore = create(
         enabledAlerts: false,
         customizedTheme: false
       },
+      setupDismissed: false,
       settings: {
         notifications: {
           lowStock: true,
@@ -454,6 +455,8 @@ const useStore = create(
 
       completeWelcome: () => set({ hasSeenWelcome: true }),
       
+      dismissSetup: () => set({ setupDismissed: true }),
+
       updateOnboardingTask: (taskName, value = true) => set((state) => ({
         onboardingTasks: { ...state.onboardingTasks, [taskName]: value }
       })),
@@ -544,6 +547,7 @@ const useStore = create(
         skin: state.skin,
         hasSeenWelcome: state.hasSeenWelcome,
         onboardingTasks: state.onboardingTasks,
+        setupDismissed: state.setupDismissed,
         notifications: state.notifications,
         hasInitializedNotifications: state.hasInitializedNotifications
       }),

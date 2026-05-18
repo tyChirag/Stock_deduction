@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Check, Trash2, Plus, Edit2, Save, X, AlertTriangle } from 'lucide-react';
-import Button from '../ui/Button';
-import ScanSummary from './ScanSummary';
+import { Check, Trash2, Plus, Edit2, Save, X, AlertTriangle, RefreshCw } from 'lucide-react';
+import Button from '../../ui/Button';
+import ScanSummary from '../ScanSummary';
 
-export default function InventoryPreviewTable({ initialData, onConfirm, onCancel }) {
+export default function ReviewInventoryModal({ initialData, rawText, onConfirm, onCancel, onRescan }) {
   const [items, setItems] = useState(initialData || []);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editForm, setEditForm] = useState({ product: '', quantity: 0, price: 0, category: '' });
+  const [showDebug, setShowDebug] = useState(false);
 
   const startEditing = (index) => {
     setEditingIndex(index);
@@ -26,8 +27,8 @@ export default function InventoryPreviewTable({ initialData, onConfirm, onCancel
   };
 
   const addNewRow = () => {
-    setItems([...items, { product: 'New Item', quantity: 1, price: 0, category: 'Uncategorized' }]);
-    startEditing(items.length);
+    setItems([{ product: 'New Item', quantity: 1, price: 0, category: 'Uncategorized', confidence: 'High' }, ...items]);
+    startEditing(0);
   };
 
   return (
@@ -36,15 +37,27 @@ export default function InventoryPreviewTable({ initialData, onConfirm, onCancel
 
       <div className="bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
         <div className="p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#1A1D24] flex justify-between items-center">
-          <h3 className="font-semibold text-gray-900 dark:text-white">Extracted Inventory Data</h3>
+          <div className="flex items-center gap-4">
+            <h3 className="font-semibold text-gray-900 dark:text-white">Extracted Inventory Data</h3>
+            <Button size="sm" variant="outline" onClick={() => setShowDebug(!showDebug)} className="text-xs border-dashed text-gray-500">
+              {showDebug ? 'Hide Debug' : 'Show OCR Debug'}
+            </Button>
+          </div>
           <Button size="sm" variant="outline" onClick={addNewRow} className="flex items-center gap-1 border-gray-300 dark:border-gray-700">
             <Plus className="h-4 w-4" /> Add Row
           </Button>
         </div>
         
-        <div className="overflow-x-auto">
+        {showDebug && (
+          <div className="p-4 bg-gray-900 text-green-400 font-mono text-sm max-h-60 overflow-y-auto border-b border-gray-800">
+            <div className="mb-2 text-gray-400 border-b border-gray-800 pb-2">## RAW OCR OUTPUT:</div>
+            <pre className="whitespace-pre-wrap">{rawText || 'No text extracted.'}</pre>
+          </div>
+        )}
+        
+        <div className="overflow-x-auto max-h-[60vh] overflow-y-auto">
           <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#1A1D24] dark:text-gray-300 border-b border-gray-200 dark:border-gray-800">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#1A1D24] dark:text-gray-300 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10 shadow-sm">
               <tr>
                 <th className="px-4 py-3">Product Name</th>
                 <th className="px-4 py-3">Confidence</th>
@@ -167,12 +180,17 @@ export default function InventoryPreviewTable({ initialData, onConfirm, onCancel
           </table>
         </div>
 
-        <div className="p-4 bg-gray-50 dark:bg-[#1A1D24] border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3">
-          <Button variant="outline" onClick={onCancel} className="border-gray-300 dark:border-gray-700">Cancel</Button>
-          <Button onClick={() => onConfirm(items)} className="flex items-center gap-2" disabled={items.length === 0}>
-            <Check className="h-4 w-4" />
-            Confirm & Add to Inventory
+        <div className="p-4 bg-gray-50 dark:bg-[#1A1D24] border-t border-gray-200 dark:border-gray-800 flex justify-between items-center gap-3">
+          <Button variant="outline" onClick={onRescan} className="border-gray-300 dark:border-gray-700 flex items-center gap-2">
+            <RefreshCw className="h-4 w-4" /> Rescan Image
           </Button>
+          <div className="flex items-center gap-3">
+            <Button variant="outline" onClick={onCancel} className="border-gray-300 dark:border-gray-700">Cancel</Button>
+            <Button onClick={() => onConfirm(items)} className="flex items-center gap-2" disabled={items.length === 0}>
+              <Check className="h-4 w-4" />
+              Import {items.length} Products
+            </Button>
+          </div>
         </div>
       </div>
     </div>
