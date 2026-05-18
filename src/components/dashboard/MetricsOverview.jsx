@@ -16,6 +16,7 @@ export default function MetricsOverview() {
       bgColor: 'bg-blue-500/10',
       trend: '+12%',
       trendUp: true,
+      tooltip: 'Your total catalog size across all connected active platforms.'
     },
     {
       label: 'Inventory Remaining',
@@ -25,6 +26,7 @@ export default function MetricsOverview() {
       bgColor: 'bg-purple-500/10',
       trend: '-2.4%',
       trendUp: false,
+      tooltip: 'The sum of all physical stock available for sale.'
     },
     {
       label: 'Total Orders',
@@ -34,6 +36,7 @@ export default function MetricsOverview() {
       bgColor: 'bg-orange-500/10',
       trend: '+18%',
       trendUp: true,
+      tooltip: 'Total lifetime orders placed across Amazon, Flipkart, etc.'
     },
     {
       label: 'Total Revenue',
@@ -43,11 +46,12 @@ export default function MetricsOverview() {
       bgColor: 'bg-green-500/10',
       trend: '+24%',
       trendUp: true,
+      tooltip: 'Your combined revenue generated (excluding refunds).'
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" data-tour="dashboard-metrics">
       {metrics.map((metric, idx) => (
         <Card
           key={idx}
@@ -58,7 +62,12 @@ export default function MetricsOverview() {
           )}
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{metric.label}</span>
+              <span 
+                className="text-sm font-medium text-gray-500 dark:text-gray-400 cursor-help border-b border-dashed border-gray-300 dark:border-gray-700 w-fit pb-0.5"
+                title={metric.tooltip}
+              >
+                {metric.label}
+              </span>
               <span className="mt-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left">
                 {metric.value}
               </span>

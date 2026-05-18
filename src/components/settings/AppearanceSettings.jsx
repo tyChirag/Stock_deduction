@@ -4,14 +4,10 @@ import useStore from '../../store/useStore';
 import Card from '../ui/Card';
 
 export default function AppearanceSettings() {
-  const { theme, toggleTheme, settings, updateSettings } = useStore();
+  const { theme, toggleTheme, settings, updateSettings, skin, setSkin } = useStore();
 
   const handleDensityChange = (density) => {
     updateSettings('appearance', { density });
-  };
-
-  const handleAccentChange = (accentColor) => {
-    updateSettings('appearance', { accentColor });
   };
 
   return (
@@ -73,24 +69,24 @@ export default function AppearanceSettings() {
         </div>
         
         <div className="border-t border-gray-100 dark:border-gray-800 pt-6">
-          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Accent Color</h4>
-          <div className="flex gap-4">
-            {['blue', 'purple', 'emerald', 'rose', 'amber'].map(color => {
-              const colorClasses = {
-                blue: 'bg-blue-500',
-                purple: 'bg-purple-500',
-                emerald: 'bg-emerald-500',
-                rose: 'bg-rose-500',
-                amber: 'bg-amber-500',
-              };
-              const isActive = settings.appearance.accentColor === color;
+          <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-4">Application Theme (Skin)</h4>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { id: 'default', label: 'Default SaaS', color: 'bg-blue-600' },
+              { id: 'minimal-white', label: 'Minimal', color: 'bg-gray-800 dark:bg-gray-200' },
+              { id: 'purple-neon', label: 'Purple Neon', color: 'bg-purple-600' },
+              { id: 'emerald-green', label: 'Emerald', color: 'bg-emerald-600' },
+              { id: 'midnight-glass', label: 'Midnight', color: 'bg-indigo-500' }
+            ].map(s => {
+              const isActive = skin === s.id;
               return (
                 <button
-                  key={color}
-                  onClick={() => handleAccentChange(color)}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${colorClasses[color]} ${isActive ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-[#111217] ring-gray-400' : 'opacity-80 hover:opacity-100'}`}
+                  key={s.id}
+                  onClick={() => setSkin(s.id)}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${isActive ? 'border-primary bg-primary/5 text-primary' : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700'}`}
                 >
-                  {isActive && <div className="w-3 h-3 bg-white rounded-full"></div>}
+                  <div className={`w-4 h-4 rounded-full ${s.color}`}></div>
+                  <span className="text-sm font-medium">{s.label}</span>
                 </button>
               );
             })}

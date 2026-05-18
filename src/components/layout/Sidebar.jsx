@@ -57,7 +57,7 @@ export default function Sidebar() {
           
           <ul className="space-y-2 font-medium flex-1">
             {navItems.map((item, index) => (
-              <li key={index}>
+              <li key={index} data-tour={`sidebar-${item.label.toLowerCase().replace(' ', '-')}`}>
                 <NavLink
                   to={item.to}
                   onClick={handleNavClick}

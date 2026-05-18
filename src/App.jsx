@@ -18,17 +18,36 @@ import OrdersPage from './pages/OrdersPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
 import OfflineStorePage from './pages/OfflineStorePage';
+import WelcomeScreen from './components/onboarding/WelcomeScreen';
+import AssistantGuide from './components/help/AssistantGuide';
 
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 function MainLayout() {
+  const location = useLocation();
+  
   return (
     <div className="min-h-screen bg-background font-sans antialiased text-foreground selection:bg-primary/20 flex">
+      <WelcomeScreen />
+      <AssistantGuide />
       <Sidebar />
       <div className="sm:pl-64 flex flex-col flex-1 min-h-screen w-full">
         <TopBar />
-        <main className="flex-1 p-3 sm:p-6 lg:p-8 pb-24 sm:pb-6 overflow-y-auto w-full relative bg-gray-50/30 dark:bg-transparent">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 pb-24 sm:pb-6 overflow-y-auto w-full relative bg-gray-50/30 dark:bg-transparent overflow-x-hidden">
           <ErrorBoundary>
-            <Outlet />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="h-full"
+              >
+                <Outlet />
+              </motion.div>
+            </AnimatePresence>
           </ErrorBoundary>
         </main>
         <BottomNav />
@@ -38,7 +57,7 @@ function MainLayout() {
 }
 
 function App() {
-  const { theme } = useStore();
+  const { theme, skin } = useStore();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -46,7 +65,8 @@ function App() {
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [theme]);
+    document.documentElement.setAttribute('data-theme', skin || 'default');
+  }, [theme, skin]);
 
   return (
     <>

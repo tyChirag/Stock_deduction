@@ -104,4 +104,62 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Themes / Skins */
+  /* Purple Neon */
+  :root[data-theme="purple-neon"] {
+    --primary: 270 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --background: 0 0% 100%;
+    --foreground: 270 10% 10%;
+  }
+  :root[data-theme="purple-neon"].dark {
+    --primary: 270 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --background: 270 50% 5%;
+    --foreground: 270 20% 90%;
+    --card: 270 40% 8%;
+    --border: 270 30% 15%;
+  }
+
+  /* Emerald Green */
+  :root[data-theme="emerald-green"] {
+    --primary: 150 100% 40%;
+    --primary-foreground: 0 0% 100%;
+  }
+  :root[data-theme="emerald-green"].dark {
+    --primary: 150 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --background: 150 20% 5%;
+    --foreground: 150 10% 90%;
+    --card: 150 15% 8%;
+    --border: 150 10% 15%;
+  }
+
+  /* Minimal White (light only forced logic handled via generic var, but we'll adapt slightly) */
+  :root[data-theme="minimal-white"] {
+    --primary: 0 0% 10%;
+    --primary-foreground: 0 0% 100%;
+    --background: 0 0% 100%;
+    --card: 0 0% 100%;
+    --border: 0 0% 90%;
+  }
+  :root[data-theme="minimal-white"].dark {
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 10%;
+    --background: 0 0% 5%;
+    --card: 0 0% 8%;
+    --border: 0 0% 15%;
+  }
+  
+  /* Midnight Glass */
+  :root[data-theme="midnight-glass"] {
+    --primary: 220 90% 56%;
+  }
+  :root[data-theme="midnight-glass"].dark {
+    --primary: 220 90% 60%;
+    --background: 220 50% 3%;
+    --card: 220 40% 6%;
+    --border: 220 30% 15%;
+  }
 }

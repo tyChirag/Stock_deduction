@@ -135,6 +135,14 @@ const useStore = create(
       },
       isMobileMenuOpen: false,
       theme: 'light',
+      skin: 'default', // default, pro-dark, neon, emerald
+      hasSeenWelcome: false,
+      onboardingTasks: {
+        connectedPlatform: false,
+        addedInventory: false,
+        enabledAlerts: false,
+        customizedTheme: false
+      },
       settings: {
         notifications: {
           lowStock: true,
@@ -435,11 +443,26 @@ const useStore = create(
         }
         return { theme: newTheme };
       }),
+      
+      setSkin: (skinName) => set((state) => {
+        document.documentElement.setAttribute('data-theme', skinName);
+        return { 
+          skin: skinName,
+          onboardingTasks: { ...state.onboardingTasks, customizedTheme: true } 
+        };
+      }),
+
+      completeWelcome: () => set({ hasSeenWelcome: true }),
+      
+      updateOnboardingTask: (taskName, value = true) => set((state) => ({
+        onboardingTasks: { ...state.onboardingTasks, [taskName]: value }
+      })),
 
       connectPlatform: async (platformKey) => {
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 1500));
         set((state) => ({
+          onboardingTasks: { ...state.onboardingTasks, connectedPlatform: true },
           data: {
             ...state.data,
             platforms: {
@@ -511,13 +534,16 @@ const useStore = create(
     }),
     {
       name: 'seller-sync-storage',
-      version: 9, // bump version to bust cache for settings object
+      version: 11, // bump version for onboarding state
       partialize: (state) => ({ 
         isAuthenticated: state.isAuthenticated,
         user: state.user,
         settings: state.settings,
         data: state.data, 
         theme: state.theme,
+        skin: state.skin,
+        hasSeenWelcome: state.hasSeenWelcome,
+        onboardingTasks: state.onboardingTasks,
         notifications: state.notifications,
         hasInitializedNotifications: state.hasInitializedNotifications
       }),

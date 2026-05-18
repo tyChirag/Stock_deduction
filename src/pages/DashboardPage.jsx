@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import MetricsOverview from '../components/dashboard/MetricsOverview';
 import Charts from '../components/dashboard/Charts';
 import PlatformBreakdown from '../components/dashboard/PlatformBreakdown';
+import SetupProgress from '../components/dashboard/SetupProgress';
 import useStore from '../store/useStore';
 import Button from '../components/ui/Button';
 
@@ -36,7 +37,7 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-7xl">
-      <h1>Dashboard Loaded</h1>
+      <SetupProgress />
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Dashboard Overview</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-2">

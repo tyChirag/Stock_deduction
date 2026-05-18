@@ -1,5 +1,6 @@
 import { cn } from '../../lib/utils';
 import { RefreshCw } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Button({ 
   children, 
@@ -9,7 +10,7 @@ export default function Button({
   disabled, 
   ...props 
 }) {
-  const baseStyles = "inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98]";
+  const baseStyles = "relative overflow-hidden inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none";
   
   const variants = {
     primary: "bg-blue-500 text-white hover:bg-blue-600 shadow-sm",
@@ -19,13 +20,15 @@ export default function Button({
   };
 
   return (
-    <button 
+    <motion.button 
+      whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
+      whileTap={{ scale: disabled || isLoading ? 1 : 0.95 }}
       className={cn(baseStyles, variants[variant], className)}
       disabled={disabled || isLoading}
       {...props}
     >
       {isLoading && <RefreshCw className="mr-2 h-4 w-4 animate-spin" />}
       {children}
-    </button>
+    </motion.button>
   );
 }
