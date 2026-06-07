@@ -5,6 +5,7 @@ import Button from '../ui/Button';
 export default function ProductImageUploader({ onImageSelect }) {
   const [url, setUrl] = useState('');
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -53,6 +54,7 @@ export default function ProductImageUploader({ onImageSelect }) {
         </p>
         
         <div className="flex justify-center flex-wrap gap-4">
+          {/* File picker input */}
           <input 
             type="file" 
             accept="image/*" 
@@ -60,11 +62,20 @@ export default function ProductImageUploader({ onImageSelect }) {
             ref={fileInputRef}
             onChange={handleFileChange}
           />
+          {/* Camera input — uses device camera via capture attribute */}
+          <input
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            ref={cameraInputRef}
+            onChange={handleFileChange}
+          />
           <Button type="button" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2">
             <Upload className="h-4 w-4" />
             Upload File
           </Button>
-          <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 border-gray-300 dark:border-gray-700">
+          <Button type="button" variant="outline" onClick={() => cameraInputRef.current?.click()} className="flex items-center gap-2 border-gray-300 dark:border-gray-700">
             <Camera className="h-4 w-4" />
             Open Camera
           </Button>

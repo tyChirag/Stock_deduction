@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import useStore from '../../store/useStore';
+import { useAuth } from '../../hooks/useAuth';
 import { 
   User, Link as LinkIcon, Bell, CreditCard, 
   Moon, Sun, HelpCircle, LogOut, Package
 } from 'lucide-react';
 
 export default function ProfileDropdown({ isOpen, onClose, onOpenProfile }) {
-  const { user, data, theme, toggleTheme, logout } = useStore();
+  const { user, data, theme, toggleTheme, logout: storeLogout } = useStore();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
@@ -38,9 +41,17 @@ export default function ProfileDropdown({ isOpen, onClose, onOpenProfile }) {
 
   const connectedCount = Object.values(data.platforms).filter(p => p.connected).length;
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogout = async () => {
+    onClose();
+    const toastId = toast.loading('Signing out...');
+    const res = await signOut();
+    if (res.success) {
+      toast.success('Successfully signed out', { id: toastId });
+      storeLogout();
+      navigate('/login');
+    } else {
+      toast.error(res.error.message || 'Logout failed', { id: toastId });
+    }
   };
 
   const handleAction = (action) => {

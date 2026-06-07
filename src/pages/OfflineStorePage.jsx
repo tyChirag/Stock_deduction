@@ -108,7 +108,7 @@ export default function OfflineStorePage() {
                     alt={product.name}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => { e.target.src = "https://via.placeholder.com/300"; }}
+                    onError={(e) => { e.target.src = "https://placehold.co/300x300?text=No+Image"; }}
                   />
                   {product.category && product.category !== 'Uncategorized' && (
                     <div className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-md flex items-center gap-1">

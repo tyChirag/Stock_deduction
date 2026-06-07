@@ -5,9 +5,10 @@ import useStore from './store/useStore';
 import Sidebar from './components/layout/Sidebar';
 import TopBar from './components/layout/TopBar';
 import BottomNav from './components/layout/BottomNav';
-import DashboardPage from './pages/DashboardPage';
+import Dashboard from './pages/Dashboard';
 import PlatformPage from './pages/PlatformPage';
-import LoginPage from './pages/LoginPage';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import ConnectPlatformsPage from './pages/ConnectPlatformsPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ErrorBoundary from './components/ui/ErrorBoundary';
@@ -73,14 +74,15 @@ function App() {
       <Toaster position="top-right" theme={theme} richColors closeButton />
       <Routes>
         {/* Public Routes */}
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/connect-platforms" element={<ConnectPlatformsPage />} />
         
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/platform/:name" element={<PlatformPage />} />
             <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/orders" element={<OrdersPage />} />

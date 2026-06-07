@@ -295,7 +295,7 @@ const useStore = create(
                   price: product.price ? Number(product.price) : p.price,
                   category: product.category || p.category,
                   sku: product.sku || p.sku,
-                  image: product.image && product.image !== "https://via.placeholder.com/300" ? product.image : p.image
+                  image: product.image && product.image !== "https://placehold.co/300x300?text=No+Image" ? product.image : p.image
                 }
               : p
           );
@@ -310,7 +310,7 @@ const useStore = create(
               category: product.category || 'Uncategorized',
               sku: product.sku || `SKU-${Math.floor(Math.random() * 10000)}`,
               sold: 0,
-              image: product.image || "https://via.placeholder.com/300"
+              image: product.image || "https://placehold.co/300x300?text=No+Image"
             }
           ];
           productsCount += 1;
@@ -423,7 +423,7 @@ const useStore = create(
               offline: {
                 ...offline,
                 productList: offline.productList.filter(p => p.id !== id),
-                products: offline.products - 1,
+                products: Math.max(0, offline.productList.filter(p => p.id !== id).length),
               }
             }
           }
@@ -432,9 +432,9 @@ const useStore = create(
 
       
       login: () => set({ isAuthenticated: true }),
-      
+
       logout: () => set({ isAuthenticated: false }),
-      
+
       toggleTheme: () => set((state) => {
         const newTheme = state.theme === 'light' ? 'dark' : 'light';
         if (newTheme === 'dark') {
@@ -533,7 +533,6 @@ const useStore = create(
           }
         }
       })),
-      logout: () => set({ isAuthenticated: false }),
     }),
     {
       name: 'seller-sync-storage',
